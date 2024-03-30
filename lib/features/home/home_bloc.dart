@@ -11,7 +11,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required this.postRepository,
     required this.localStorageRepository,
-  }) : super(const HomeState()) {
+  }) : super(
+          HomeState(
+            userModel: localStorageRepository.getCurrentUserModel(),
+            isSignedOut: false,
+          ),
+        ) {
     on<HomeEvent>((event, emit) {
       _mapEventToState(event, emit);
     });
@@ -25,7 +30,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       case HomeEventLogout _:
         {
           localStorageRepository.deletedSignedInUserModel();
-          emit(state.copyWith(isSignedOut: true));
+          emit(
+            state.copyWith(
+              isSignedOut: true,
+              userModel: null,
+            ),
+          );
         }
     }
   }
