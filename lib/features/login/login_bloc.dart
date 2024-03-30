@@ -33,6 +33,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }
       case LoginEventSubmit _:
         {
+          // prevent duplicate action from user
+          if (state.status is LoginFormSubmittingStatus) return;
           emit(state.copyWith(status: LoginFormSubmittingStatus()));
           final response = await authRepository.login(
             username: state.username,

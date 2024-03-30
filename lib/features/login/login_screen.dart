@@ -11,6 +11,10 @@ import 'package:interview_exam/repositories/auth_repository.dart';
 import 'package:interview_exam/repositories/local_storage_repository.dart';
 
 class LoginScreen extends StatelessWidget {
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => LoginScreen());
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   LoginScreen({super.key});
