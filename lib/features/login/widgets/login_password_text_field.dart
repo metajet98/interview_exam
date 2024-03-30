@@ -19,12 +19,6 @@ class LoginPasswordTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      validator: (password) {
-        if (password == null || password.isEmpty) {
-          return 'Please input password!';
-        }
-        return null;
-      },
       onChanged: (password) => context.read<LoginBloc>().add(
             LoginEventPasswordChange(
               password: password,
