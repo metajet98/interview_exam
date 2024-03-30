@@ -7,6 +7,10 @@ import 'package:interview_exam/responses/login_response.dart';
 class AuthRepository {
   late final List<UserModel> _userModels;
 
+  AuthRepository() {
+    _readDataFromAsset();
+  }
+
   Future<LoginResponse> login({
     required String username,
     required String password,
@@ -21,7 +25,7 @@ class AuthRepository {
     return LoginResponse(isSuccess: false, userModel: null);
   }
 
-  Future<void> readDataFromFile() async {
+  Future<void> _readDataFromAsset() async {
     final jsonList = jsonDecode(
       await rootBundle.loadString("assets/auth.json"),
     );
