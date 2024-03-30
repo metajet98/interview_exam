@@ -5,16 +5,12 @@ import 'package:interview_exam/models/post_model.dart';
 class PostRepository {
   late final List<PostModel> _postModels;
 
-  PostRepository() {
-    _readDataFromAsset();
-  }
-
   Future<List<PostModel>> getPosts() async {
     await Future.delayed(const Duration(seconds: 2));
     return _postModels;
   }
 
-  Future<void> _readDataFromAsset() async {
+  Future<void> readDataFromAsset() async {
     final jsonList = jsonDecode(
       await rootBundle.loadString("assets/data.json"),
     );

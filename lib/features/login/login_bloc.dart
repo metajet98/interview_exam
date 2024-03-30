@@ -3,12 +3,15 @@ import 'package:interview_exam/features/login/login_event.dart';
 import 'package:interview_exam/features/login/login_form_status.dart';
 import 'package:interview_exam/features/login/login_state.dart';
 import 'package:interview_exam/repositories/auth_repository.dart';
+import 'package:interview_exam/repositories/local_storage_repository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepository;
+  final LocalStorageRepository localStorageRepository;
 
   LoginBloc({
     required this.authRepository,
+    required this.localStorageRepository,
   }) : super(const LoginState()) {
     on<LoginEvent>((event, emit) async {
       await _mapEventToState(event, emit);
@@ -47,6 +50,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             return;
           }
           // success
+          localStorageRepository.setSignedInUserModel(
+            userModel: response.userModel!,
+          );
           emit(
             state.copyWith(
               status: LoginFormSuccessStatus(

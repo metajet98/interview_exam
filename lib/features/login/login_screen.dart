@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:interview_exam/features/home/home_screen.dart';
 import 'package:interview_exam/features/login/login_bloc.dart';
 import 'package:interview_exam/features/login/login_form_status.dart';
 import 'package:interview_exam/features/login/login_state.dart';
@@ -7,6 +8,7 @@ import 'package:interview_exam/features/login/widgets/login_password_text_field.
 import 'package:interview_exam/features/login/widgets/login_submit_button.dart';
 import 'package:interview_exam/features/login/widgets/login_username_text_field.dart';
 import 'package:interview_exam/repositories/auth_repository.dart';
+import 'package:interview_exam/repositories/local_storage_repository.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,6 +20,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(
         authRepository: context.read<AuthRepository>(),
+        localStorageRepository: context.read<LocalStorageRepository>(),
       ),
       child: BlocListener<LoginBloc, LoginState>(
         listenWhen: (previous, current) => previous.status != current.status,
@@ -33,7 +36,9 @@ class LoginScreen extends StatelessWidget {
                 );
               }
             case LoginFormSuccessStatus _:
-              {}
+              {
+                Navigator.of(context).pushReplacement(HomeScreen.route());
+              }
           }
         },
         child: Scaffold(
